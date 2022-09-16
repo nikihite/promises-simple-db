@@ -13,7 +13,7 @@ describe('simple database', () => {
     await fs.mkdir(TEST_DIR, { recursive: true });
   });
 
-  it.only('GET:id returns object by id', async () => {
+  it('GET:id returns object by id', async () => {
     const dogs = {
       name: 'Bear', age: 1
     };
@@ -24,7 +24,7 @@ describe('simple database', () => {
     expect(result).toEqual(dogs);
   });
 
-  it('save should save an object', async () => {
+  it.only('save should save an object', async () => {
     const objToSave = {
       name: 'bubbles',
       age: 'old'
