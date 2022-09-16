@@ -8,7 +8,6 @@ const BASE_DIR = CI ? HOME : __dirname;
 const TEST_DIR = path.join(BASE_DIR, 'test-dir');
 
 describe('simple database', () => {
-
   beforeEach(async () => {
     await fs.rm(TEST_DIR, { force: true, recursive: true });
     await fs.mkdir(TEST_DIR, { recursive: true });
@@ -35,6 +34,47 @@ describe('simple database', () => {
     const obj = await db.save(objToSave);
 
     expect(await db.get(obj.id)).toEqual({ ...objToSave, id: expect.any(String) });
+  });
+
+  it('getall() should return all objects in directory', async () => {
+    const objects = [
+      {
+        name: 'karen',
+        age: 70,
+      },
+      {
+        name: 'kelly',
+        age: 49,
+      },
+      {
+        name: 'sharon',
+        age: 63,
+      },
+    ];
+
+    const db = new SimpleDb(TEST_DIR);
+
+    objects.forEach(async object => {
+      await db.save(object);
+    });
+
+    expect(await db.getAll()).toEqual([
+      {
+        name: expect.any(String),
+        age: expect.any(Number),
+        id: expect.any(String)
+      },
+      {
+        name: expect.any(String),
+        age: expect.any(Number),
+        id: expect.any(String)
+      },
+      {
+        name: expect.any(String),
+        age: expect.any(Number),
+        id: expect.any(String)
+      }
+    ]);
   });
 });
 
